@@ -1,0 +1,37 @@
+<launch>
+
+<!-- Launching the rosserial node to connect to hardware -->
+<!-- Mega at USB0 with baud rate 115200 -->
+<node name="Arduino_Mega"        pkg="rosserial_python"      type="serial_node.py">
+    <param name="port"              type="string"               value="/dev/ttyUSB0"/>
+    <param name="baud"              type="int"                  value="115200"/>
+    </node>
+
+<!-- Nano at USB0 with baud rate 115200 -->
+<node name="Arduino_Nano"        pkg="rosserial_python"      type="serial_node.py">
+    <param name="port"              type="string"               value="/dev/ttyUSB1"/>
+    <param name="baud"              type="int"                  value="115200"/>
+    </node>
+
+<!-- Launching all the necessary nodes -->
+<!-- This node converts incoming range messages to laser scan messages -->
+<node pkg="mobile_robot" type="range_to_laser.py" name="range_to_laser" args="$(find mobile_robot)/scripts/range_to_laser.py"/>
+
+<!-- These nodes implement the PID algorithm to control the motor via hardware -->
+<node pkg="mobile_robot" type="pid_velocity_R.py" name="pid_velocity_R" args="$(find mobile_robot)/scripts/pid_velocity_R.py"/>
+<node pkg="mobile_robot" type="pid_velocity_L.py" name="pid_velocity_L" args="$(find mobile_robot)/scripts/pid_velocity_L.py"/>
+
+<!-- This node converts twist message to individual motor commands -->
+<node pkg="mobile_robot" type="twist_to_motor.py" name="twist_to_motor" output="screen" args="$(find mobile_robot)/scripts/twist_to_motor.py"/>
+
+<!-- This node calculated the odometry based on sensor data and publishes the Transforms -->
+<node pkg="mobile_robot" type="diff_tf.py" name="diff_tf" args="$(find mobile_robot)/scripts/diff_tf.py"/>
+
+<!-- These nodes publishes the static transforms of the URDF files -->
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+	<param name="publish_frequency" value="11"/>
+</node>
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+</launch>

@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/jeelros/mobile_ws/devel/include/**",
+        "/home/jeelros/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/jeelros/mobile_ws/src/mobile_robot/include/**",
+        "/home/jeelros/catkin_ws/src/pkg_ros_basics1/include/**",
+        "/home/jeelros/catkin_ws/src/pkg_ros_motor/include/**",
+        "/home/jeelros/mobile_ws/src/rosserial/rosserial_server/include/**",
+        "/home/jeelros/mobile_ws/src/rosserial/rosserial_test/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
